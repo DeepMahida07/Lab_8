@@ -26,8 +26,21 @@ def get_married_couples():
     """
     # TODO: Function body
     # Hint: See example code in lab instructions entitled "Get a List of Relationships"
-    con = sqlite3.connect(db_path)
-    return
+    connection = sqlite3.connect(db_path)
+    cur = connection.cursor()
+
+    all_relationships_query = """
+ SELECT person1.name, person2.name, start_date, type FROM relationships
+ JOIN people person1 ON person1_id = person1.id
+ JOIN people person2 ON person2_id = person2.id;
+"""
+    cur.execute(all_relationships_query)
+    all_relationships = cur.fetchall()
+    connection.close()
+
+    #Printing a sentence about the relationship.
+    for person1, person2, start_date, type in all_relationships:
+        print(f'{person1} has been a {type} of {person2} since {start_date}.')
 
 def save_married_couples_csv(married_couples, csv_path):
     """Saves list of married couples to a CSV file, including both people's 
