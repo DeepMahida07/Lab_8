@@ -14,7 +14,8 @@ from faker import Faker
 
 # Determine the path of the database
 script_dir = os.path.dirname(os.path.abspath(__file__))
-db_path = r"D:\Semester 2\Scripting Applications\Lab_7\social_network.db"
+db_path = os.path.join(script_dir, 'social_network.db')
+#db_path = r"D:\Semester 2\Scripting Applications\Lab_7\social_network.db"
 
 def main():
     create_relationships_table()
@@ -40,6 +41,8 @@ def create_relationships_table():
  );
 """
     cur.execute(create_relationships_tbl_query)
+    connection.commit()
+    connection.close()
 
 def populate_relationships_table():
     """Adds 100 random relationships to the DB"""

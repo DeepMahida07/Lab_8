@@ -9,6 +9,7 @@ Usage:
 import os
 import sqlite3
 from create_relationships import db_path, script_dir
+import pandas as pd
 
 def main():
     # Query DB for list of married couples
@@ -52,7 +53,18 @@ def save_married_couples_csv(married_couples, csv_path):
     """
     # TODO: Function body
     # Hint: We did this in Lab 7.
-    return
+    csv_path = r'D:\Semester 2\Scripting Applications\Lab_8\married_couples.csv'
+    connection = sqlite3.connect('social_network.db')
+    married_couple_query = """
+    SELECT person1, person2, start_date FROM relationships 
+    WHERE type = "spouse" OR type = "spouse"
+    """
+    cur = connection.cursor()
+    cur.execute(married_couple_query)
+    married_couples = cur.fetchall()
+    df = pd.DataFrame(married_couples, columns=['Pesron1', 'Person2', 'Anniversary', 'Type'])
+    df.to_csv(csv_path, index=False)
+    return 
 
 if __name__ == '__main__':
    main()
