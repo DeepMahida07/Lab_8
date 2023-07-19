@@ -57,7 +57,7 @@ def save_married_couples_csv(married_couples, csv_path):
     connection = sqlite3.connect('social_network.db')
     married_couple_query = """
     SELECT person1, person2, start_date FROM relationships 
-    WHERE type = "spouse" OR type = "spouse"
+    WHERE type = "spouse" OR type = "partner"
     """
     cur = connection.cursor()
     cur.execute(married_couple_query)
