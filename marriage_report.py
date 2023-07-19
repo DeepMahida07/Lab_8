@@ -62,7 +62,7 @@ def save_married_couples_csv(married_couples, csv_path):
     cur = connection.cursor()
     cur.execute(married_couple_query)
     married_couples = cur.fetchall()
-    df = pd.DataFrame(married_couples, columns=['Pesron1', 'Person2', 'Anniversary', 'Type'])
+    df = pd.DataFrame(married_couples, columns=['Pesron1', 'Person2', 'Anniversary'])
     df.to_csv(csv_path, index=False)
     return 
 
