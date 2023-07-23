@@ -14,8 +14,8 @@ from faker import Faker
 
 # Determine the path of the database
 script_dir = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(script_dir, 'social_network.db')
-#db_path = r"D:\Semester 2\Scripting Applications\Lab_7\social_network.db"
+#db_path = os.path.join(script_dir, 'social_network.db')
+db_path = r"D:\Semester 2\Scripting Applications\Lab_7\social_network.db"
 
 def main():
     create_relationships_table()
@@ -63,12 +63,12 @@ def populate_relationships_table():
     cur = connection.cursor()
     fake = Faker()
 
-    person1_id = randint(1, 200)
-    person2_id = randint(1, 200)
+    person1_id = randint(1, 100)
+    person2_id = randint(1, 100)
     while person2_id == person1_id:
-        person2_id = randint(1, 200)
+        person2_id = randint(1, 100)
 
-    #Creating fake relationshi between two people.     
+    #Creating fake relationship between two people.     
     rel_type = choice(('bestfriend', 'freind', 'spouse', 'partner', 'relative', 'close relative'))
     start_date = fake.date_between(start_date='-50y', end_date='today')
     new_relationship = (person1_id, person2_id, rel_type, start_date)

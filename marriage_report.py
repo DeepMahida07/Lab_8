@@ -31,7 +31,7 @@ def get_married_couples():
     cur = connection.cursor()
 
     all_relationships_query = """
- SELECT person1.name, person2.name, start_date, type FROM relationships
+ SELECT person1_id, person2_id, type, start_date FROM relationships
  JOIN people person1 ON person1_id = person1.id
  JOIN people person2 ON person2_id = person2.id;
 """
@@ -40,8 +40,8 @@ def get_married_couples():
     connection.close()
 
     #Printing a sentence about the relationship.
-    for person1, person2, start_date, type in all_relationships:
-        print(f'{person1} has been a {type} of {person2} since {start_date}.')
+    for person1_id, person2_id, start_date, type in all_relationships:
+        print(f'{person1_id} has been a {type} of {person2_id} since {start_date}.')
 
 def save_married_couples_csv(married_couples, csv_path):
     """Saves list of married couples to a CSV file, including both people's 
@@ -56,15 +56,14 @@ def save_married_couples_csv(married_couples, csv_path):
     csv_path = r'D:\Semester 2\Scripting Applications\Lab_8\married_couples.csv'
     connection = sqlite3.connect('social_network.db')
     married_couple_query = """
-    SELECT person1, person2, start_date FROM relationships 
+    SELECT person1_id, person2_id, start_date FROM relationships 
     WHERE type = "spouse" OR type = "partner"
     """
     cur = connection.cursor()
     cur.execute(married_couple_query)
     married_couples = cur.fetchall()
     df = pd.DataFrame(married_couples, columns=['Pesron1', 'Person2', 'Anniversary'])
-    df.to_csv(csv_path, index=False)
-    return 
+    df.to_csv(csv_path, index=True)
 
 if __name__ == '__main__':
    main()
